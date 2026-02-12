@@ -1,7 +1,7 @@
 import { AlertCircle } from "lucide-react";
 
 interface Props {
-  overallSummary: string;
+  overallSummary: string[];
   disclaimer: string;
 }
 
@@ -15,7 +15,13 @@ export default function ReportDetailOverallSummary({
         <AlertCircle className="w-6 h-6 text-indigo-600" />
         Overall Summary
       </h3>
-      <p className="text-gray-700 leading-relaxed mb-4">{overallSummary}</p>
+      <ul className="list-disc list-inside space-y-2 mb-4 pl-2">
+        {overallSummary.map((point, index) => (
+          <li key={index} className="text-gray-700 leading-relaxed">
+            {point}
+          </li>
+        ))}
+      </ul>
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <p className="text-sm text-yellow-800 leading-relaxed">
           <strong>Disclaimer:</strong> {disclaimer}

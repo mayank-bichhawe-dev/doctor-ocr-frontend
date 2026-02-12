@@ -27,7 +27,7 @@ export const getTrendStatusBadge = (status: ReportParameterStatus): string => {
     NORMAL: "bg-green-100 text-green-800",
     HIGH: "bg-red-100 text-red-800",
     LOW: "bg-yellow-100 text-yellow-800",
-    UNKNOWN: "bg-gray-100 text-gray-800",
+    "N/A": "bg-gray-100 text-gray-800",
   };
   return styles[status];
 };

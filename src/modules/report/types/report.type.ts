@@ -1,6 +1,11 @@
-export type ReportParameterStatus = "NORMAL" | "LOW" | "HIGH" | "UNKNOWN";
+export type ReportParameterStatus = "NORMAL" | "LOW" | "HIGH" | "N/A";
 export type ReportFilterStatus = "all" | "NORMAL" | "LOW" | "HIGH";
 export type BloodReportTrendType = "INCREASED" | "DECREASED" | "STABLE";
+
+export interface BloodParameterSubParameter {
+  label: string;
+  description: string;
+}
 
 export interface ReportParameter {
   name: string;
@@ -8,6 +13,7 @@ export interface ReportParameter {
   unit: string;
   referenceRange: string;
   status: ReportParameterStatus;
+  subParameters: BloodParameterSubParameter[] | null;
 }
 
 export interface ReportParameterCounts {
@@ -24,7 +30,7 @@ export interface Report {
   reportType: string;
   reportDate: string;
   parameters: ReportParameter[];
-  overallSummary: string;
+  overallSummary: string[];
   disclaimer: string;
   createdAt: string;
   updatedAt: string;

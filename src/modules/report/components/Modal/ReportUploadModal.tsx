@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Upload,
   X,
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 import { setReportDetailsInLocalStorage } from "../../utils";
 import type { ReportUploadApiRes } from "../../types";
+import axiosInstance from "../../../../interceptor";
 
 type ReturnType = {
   ReportUploadModal: React.FC;
@@ -80,9 +80,14 @@ export default function useReportUploadModal(): ReturnType {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      const { data } = await axios.post<ReportUploadApiRes>(
-        "http://localhost:3000/report/upload-and-summarize",
-        formData
+      const { data } = await axiosInstance.post<ReportUploadApiRes>(
+        "/report/upload-and-summarize",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       setReportDetailsInLocalStorage(data.data);
       setUploadStatus("success");

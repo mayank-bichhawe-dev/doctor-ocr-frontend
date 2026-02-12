@@ -1,10 +1,13 @@
-export default function ReportDetailSummaryCard() {
-  const statusCounts = {
-    total: 12,
-    normal: 8,
-    high: 2,
-    low: 2,
+interface Props {
+  statusCounts: {
+    normal: number;
+    low: number;
+    high: number;
+    total: number;
   };
+}
+
+export default function ReportDetailSummaryCard({ statusCounts }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
       <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-indigo-500">

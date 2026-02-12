@@ -6,11 +6,8 @@ import ReportTrendGraph from "./ReportTrendGraph";
 import ReportTrendCard from "./ReportTrendCard";
 import ReportTrendSummaryStats from "./ReportTrendSummaryStats";
 import type { BloodReportTrend, ReportTrendsApiRes } from "../../types";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-
-type ViewMode = "cards" | "graph";
-const BASE_URL = "http://localhost:3000";
+import axiosInstance from "../../../../interceptor";
+import type { CardAndGraphViewMode } from "../../../../types";
 
 function trendStatsCount(trends: BloodReportTrend[]) {
   let increasedCount = 0;
@@ -34,29 +31,18 @@ function trendStatsCount(trends: BloodReportTrend[]) {
 }
 
 export default function ReportTrends() {
-  const { patientId } = useParams();
-  const [viewMode, setViewMode] = useState<ViewMode>("cards");
+  const [viewMode, setViewMode] = useState<CardAndGraphViewMode>("cards");
   const [trends, setTrends] = useState<BloodReportTrend[]>([]);
-  const [comparisonDates, setComparisonDates] = useState({
-    start: "",
-    end: "",
-  });
 
   useEffect(() => {
-    if (patientId) {
-      fetchReportTrends(patientId);
-    }
-  }, [patientId]);
+    fetchReportTrends();
+  }, []);
 
-  function fetchReportTrends(id: string) {
-    axios
-      .get<ReportTrendsApiRes>(`${BASE_URL}/report/trends/${id}`)
+  function fetchReportTrends() {
+    axiosInstance
+      .get<ReportTrendsApiRes>(`/report/trends`)
       .then((res) => {
         setTrends(res.data.trends);
-        setComparisonDates({
-          start: res.data.from,
-          end: res.data.to,
-        });
       })
       .catch((error) => {
         console.error(error);
@@ -68,7 +54,7 @@ export default function ReportTrends() {
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header - Matching theme */}
-      <ReportTrendHeader patientId={patientId as string} />
+      <ReportTrendHeader />
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Page Title & Description */}
@@ -78,7 +64,7 @@ export default function ReportTrends() {
         <ReportTrendLegendCard
           viewMode={viewMode}
           onChangeViewMode={(currViewMode: string) =>
-            setViewMode(currViewMode as ViewMode)
+            setViewMode(currViewMode as CardAndGraphViewMode)
           }
         />
 

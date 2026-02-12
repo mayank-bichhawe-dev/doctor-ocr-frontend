@@ -14,7 +14,7 @@ import { getReportDetailsFromLocalStorage } from "../../utils";
 export default function ReportDetail() {
   const report = getReportDetailsFromLocalStorage();
   const [activeTab, setActiveTab] = useState<"all" | "normal" | "abnormal">(
-    "all"
+    "all",
   );
 
   const getStatusCounts = () => {
@@ -33,7 +33,7 @@ export default function ReportDetail() {
     if (activeTab === "normal")
       return report.parameters.filter((p) => p.status === "NORMAL");
     return report.parameters.filter(
-      (p) => p.status === "HIGH" || p.status === "LOW"
+      (p) => p.status === "HIGH" || p.status === "LOW",
     );
   };
 
@@ -54,7 +54,7 @@ export default function ReportDetail() {
         <ReportDetailCardHeader report={report} />
 
         {/* Summary Cards */}
-        <ReportDetailSummaryCard />
+        <ReportDetailSummaryCard statusCounts={statusCounts} />
 
         {/* Overall Summary */}
         <ReportDetailOverallSummary

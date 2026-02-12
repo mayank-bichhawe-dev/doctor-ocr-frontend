@@ -1,6 +1,5 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, startTransition } from "react";
-import axios from "axios";
 
 import Loader from "../../../../components/Loader";
 import TabButton from "../../../../components/TabButton";
@@ -11,16 +10,16 @@ import ReportListEmpty from "./ReportListEmpty";
 import ReportListCard from "./ReportListCard";
 import ReportListTable from "./ReportListTable";
 
-import type { CardAndTableViewMode } from "../../../../types";
-import type { ReportFilterStatus, Report, ReportsApiRes } from "../../types";
+import axiosInstance from "../../../../interceptor";
 import {
   getReportStatusCounts,
   setReportDetailsInLocalStorage,
 } from "../../utils";
+import type { CardAndTableViewMode } from "../../../../types";
+import type { ReportFilterStatus, Report, ReportsApiRes } from "../../types";
 
 const ReportsList = () => {
   const navigate = useNavigate();
-  const { patientId } = useParams();
   const [reports, setReports] = useState<Report[]>([]);
   const [totalReports, setTotalReports] = useState(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -30,10 +29,8 @@ const ReportsList = () => {
 
   const fetchReports = () => {
     setLoading(true);
-    axios
-      .get<ReportsApiRes>(
-        `${import.meta.env.VITE_BASE_URL}/report/list/${patientId}`
-      )
+    axiosInstance
+      .get<ReportsApiRes>("/report/list")
       .then((response) => {
         setReports(response.data.data);
         setTotalReports(response.data.count);

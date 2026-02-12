@@ -177,7 +177,7 @@ export default function AuthLayout() {
         email: "",
         password: "",
       });
-      navigate(`/reports/${data.data.user.id}`);
+      navigate(`/reports`);
     } catch (error: any) {
       setMessage({
         type: "error",

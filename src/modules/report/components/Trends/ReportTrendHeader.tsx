@@ -1,11 +1,7 @@
 import { Activity, ArrowLeft, FileText, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function ReportTrendHeader({
-  patientId,
-}: {
-  patientId: string;
-}) {
+export default function ReportTrendHeader() {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -42,7 +38,7 @@ export default function ReportTrendHeader({
           {/* Right Side - Navigation Links */}
           <nav className="flex items-center gap-2">
             <Link
-              to={`/reports/${patientId}`}
+              to={`/reports`}
               className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg transition-all font-medium"
             >
               <FileText className="w-4 h-4" />
