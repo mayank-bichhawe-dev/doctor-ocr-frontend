@@ -20,9 +20,7 @@ import axios from "axios";
 import type { AuthApiRes } from "../types/user.type";
 import { useNavigate } from "react-router-dom";
 
-const BASE_AUTH_URL = "http://localhost:3000/auth/email";
-const LOGIN_URL = `${BASE_AUTH_URL}/login`;
-const SIGNUP_URL = `${BASE_AUTH_URL}/register`;
+const BASE_URL = `${import.meta.env.VITE_BASE_URL}/auth/email`;
 
 export default function AuthLayout() {
   const navigate = useNavigate();
@@ -120,7 +118,7 @@ export default function AuthLayout() {
 
     setLoading(true);
     try {
-      const { data } = await axios.post<AuthApiRes>(SIGNUP_URL, {
+      const { data } = await axios.post<AuthApiRes>(`${BASE_URL}/register`, {
         firstName: signupForm.firstName,
         lastName: signupForm.lastName,
         email: signupForm.email,
@@ -163,7 +161,10 @@ export default function AuthLayout() {
     setLoading(true);
 
     try {
-      const { data } = await axios.post<AuthApiRes>(LOGIN_URL, loginForm);
+      const { data } = await axios.post<AuthApiRes>(
+        `${BASE_URL}/login`,
+        loginForm,
+      );
       localStorage.setItem("accessToken", data.data.accessToken);
       localStorage.setItem("refreshToken", data.data.refreshToken);
       localStorage.setItem("user", JSON.stringify(data.data.user));

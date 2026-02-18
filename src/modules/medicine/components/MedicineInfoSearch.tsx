@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import axios, { type AxiosError } from "axios";
+import { type AxiosError } from "axios";
 import type { MedicineSearchApiRes, DrugLabel } from "../types";
 import MedicineSearchHeader from "./Search/MedicineSearchHeader";
 import MedicineSearchForm from "./Search/MedicineSearchForm";
@@ -8,6 +8,7 @@ import MedicineSearchInfoCard from "./Search/MedicineSearchInfoCard";
 import MedicineResultHeader from "./Result/MedicineResultHeader";
 import MedicineResultCard from "./Result/MedicineResultCard";
 import MedicineResultStateRender from "./Result/MedicineResultStateRender";
+import axiosInstance from "../../../interceptor";
 
 const MedicineInfoSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,10 +30,9 @@ const MedicineInfoSearch = () => {
     setError("");
     setHasSearched(true);
 
-    const URL = import.meta.env.VITE_BASE_URL;
     try {
-      const { data } = await axios.get<MedicineSearchApiRes>(
-        `${URL}/medicine/search/${searchTerm}`,
+      const { data } = await axiosInstance.get<MedicineSearchApiRes>(
+        `/medicine/search/${searchTerm}`,
       );
 
       setMedicines(data.data);
