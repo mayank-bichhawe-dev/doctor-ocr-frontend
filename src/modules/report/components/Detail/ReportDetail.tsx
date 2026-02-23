@@ -11,6 +11,7 @@ import ReportDetailTable from "./ReportDetailTable";
 import ReportDetailAttentionMarkers from "./AttentionMarkers/Reportdetailattentionmarkers";
 
 import { getReportDetailsFromLocalStorage } from "../../utils";
+import ReportDetailSuggestedQuestions from "./SuggestedQuestion/ReportDetailSuggestedQuestions";
 
 export default function ReportDetail() {
   const report = getReportDetailsFromLocalStorage();
@@ -74,6 +75,12 @@ export default function ReportDetail() {
             attentionMarkersText={report.attentionMarkersText}
           />
         )}
+
+        {/* Suggested Questions for Doctor */}
+        <ReportDetailSuggestedQuestions
+          reportId={report.id}
+          initialQuestions={report.suggestedQuestions}
+        />
 
         {/* Parameters Section */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">

@@ -33,6 +33,7 @@ export interface Report {
   overallSummary: string[];
   disclaimer: string;
   attentionMarkersText: string | null;
+  suggestedQuestions: string[] | null;
   createdAt: string;
   updatedAt: string;
   statusCounts: ReportParameterCounts;
