@@ -8,6 +8,7 @@ import ReportDetailOverallSummary from "./ReportDetailOverallSummary";
 import ReportDetailTableTabs from "./ReportDetailTableTabs";
 import ReportDetailTableNoData from "./ReportDetailTableNoData";
 import ReportDetailTable from "./ReportDetailTable";
+import ReportDetailAttentionMarkers from "./AttentionMarkers/Reportdetailattentionmarkers";
 
 import { getReportDetailsFromLocalStorage } from "../../utils";
 
@@ -43,6 +44,9 @@ export default function ReportDetail() {
 
   const statusCounts = getStatusCounts();
   const filteredParams = getFilteredParameters();
+  const hasAbnormal = report.parameters.some(
+    (p) => p.status === "HIGH" || p.status === "LOW",
+  );
 
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -61,6 +65,15 @@ export default function ReportDetail() {
           overallSummary={report.overallSummary}
           disclaimer={report.disclaimer}
         />
+
+        {/* ── Attention Markers + AI Speech Player ── */}
+        {hasAbnormal && (
+          <ReportDetailAttentionMarkers
+            reportId={report.id}
+            parameters={report.parameters}
+            attentionMarkersText={report.attentionMarkersText}
+          />
+        )}
 
         {/* Parameters Section */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">

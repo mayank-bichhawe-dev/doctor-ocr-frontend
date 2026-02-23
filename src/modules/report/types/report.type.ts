@@ -32,6 +32,7 @@ export interface Report {
   parameters: ReportParameter[];
   overallSummary: string[];
   disclaimer: string;
+  attentionMarkersText: string | null;
   createdAt: string;
   updatedAt: string;
   statusCounts: ReportParameterCounts;
